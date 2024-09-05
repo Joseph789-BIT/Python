@@ -12,3 +12,4 @@ while True:
     my_survey.store_response(response)
 
 print("\nThank you to everyone who participated in the survey!")
+my_survey.show_results()
