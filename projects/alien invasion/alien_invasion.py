@@ -5,7 +5,8 @@ from pygame.sprite import Group
 
 from settings import Settings
 from ship import Ship
-import game_function as gf
+from alien import Alien
+import game_functions as gf
 
 def run_game():
     pygame.init()
@@ -13,21 +14,15 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height))
     pygame.display.set_caption("Alien Invasion")
-
     ship = Ship(ai_settings, screen)
     bullets = Group()
+    alien = Alien(ai_settings, screen)
 
     while True:
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
-        bullets.update()
-        gf.update_screen(ai_settings, screen, ship, bullets)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
-        screen.fill(ai_settings.bg_color)
-        ship.blitme()
+        gf.update_bullets(bullets)
+        gf.update_screen(ai_settings, screen, ship, alien, bullets)
 
         pygame.display.flip()
 
