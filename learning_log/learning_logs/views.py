@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Topic
-from .forms import TopicForm
+from .forms import TopicForm, EntryForm
 
 # Create your views here.
 def index(request):
@@ -37,3 +37,10 @@ def new_topic(request):
 
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
+def new_entry(request, topic_id):
+    """Add a new entry for a particular topic"""
+    topic = Topic.objects.get(id=topic_id)
+
+    if request.method != 'POST':
+        # No data
