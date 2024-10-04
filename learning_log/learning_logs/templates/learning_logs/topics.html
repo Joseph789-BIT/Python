@@ -2,16 +2,12 @@
 
 {% block content %}
 
-  <p>Topics: {{ topics }}</p>
+  <h2>Topics</h2>
 
-  <p>Entries:</p>
+  <h3>Entries:</h3>
 
     <ul>
         {% for topic in topics %}
-        <li>
-            <p>{{ entry.date_added|date:'M d, Y H:i'}}</p>
-            <p>{{ entry.text|linebreaks }}</p>
-        </li>
         <li>
             <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
         </li>
