@@ -7,23 +7,20 @@
   <h3>Entries:</h3>
 
      {% for topic in topics %}
-
+        <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
         <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
         <br>
         <a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a>
 
-      {% if topic.entries %}
-      <ul>
-        {% for entry in topic.entries %}
+        {% for entry in entries %}
         <li>
-            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-            {{ entry }} - <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+            <p>{{ entry.text|linebreaks }}</p>
+            <p>
+               {{ entry }} -<a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+            </p>
         </li>
         {% endfor %}
-      </ul>
-      {% else %}
-      <p>No entries for this topic yet.</p>
-      {% endif %}
 
     {% endfor %}
 
