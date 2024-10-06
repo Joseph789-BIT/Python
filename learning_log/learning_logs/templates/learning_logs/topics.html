@@ -6,18 +6,26 @@
 
   <h3>Entries:</h3>
 
-    <ul>
-        {% for topic in topics %}
+     {% for topic in topics %}
+
+        <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+        <br>
+        <a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a>
+
+      {% if topic.entries %}
+      <ul>
+        {% for entry in topic.entries %}
         <li>
             <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+            {{ entry }} - <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
         </li>
-      {% empty %}
-        <li>
-            There are no entries for this topic yet
-        </li>
-      {% endfor %}
-    </ul>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No entries for this topic yet.</p>
+      {% endif %}
 
-    <a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a>
+    {% endfor %}
+
 
 {% endblock content %}
