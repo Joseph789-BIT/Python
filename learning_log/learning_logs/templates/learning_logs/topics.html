@@ -1,28 +1,21 @@
 {% extends "learning_logs/base.html" %}
 
+{% block header %}
+  <h1>Topics</h1>
+{% endblock header %}
+
 {% block content %}
-
-  <h2>Topics</h2>
-
-  <h3>Entries:</h3>
-
-     {% for topic in topics %}
-        <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-        <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
-        <br>
-        <a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a>
-
-        {% for entry in entries %}
-        <li>
-            <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-            <p>{{ entry.text|linebreaks }}</p>
-            <p>
-               {{ entry }} -<a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
-            </p>
-        </li>
+    <ul>
+        {% for topic in topics %}
+            <li>
+                <h3>
+                    <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+                </h3>
+            </li>
+        {% empty %}
+            <li>No topics have been added yet.</li>
         {% endfor %}
+    </ul>
 
-    {% endfor %}
-
-
+    <h3><a href="{% url 'learning_logs:new:topic' %}">Add new topic</a> </h3>
 {% endblock content %}
