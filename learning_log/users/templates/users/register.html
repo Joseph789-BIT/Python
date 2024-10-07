@@ -1,13 +1,17 @@
-{% extends "learning_logs/base.html" %}
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.http import HttpResponse
 
-{% block content %}
-
-    <form method="post" action="{% url 'users:register' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-
-        <button name="submit">Register</button>
-        <input type="hidden" name="next" value="{% url 'learning_logs:index %}" />
-    </form>
-
-{% endblock content %}
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # Log the user in and redirect to home page
+            login(request, new_user)
+            return redirect('learning_logs:topics')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'users/register.html', {'form': form})

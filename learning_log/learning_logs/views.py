@@ -21,7 +21,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries."""
-    topic = Topic.object.get(id=topic_id)
+    topic = Topic.objects.get(id=topic_id)
     if topic.owner != request.user:
         raise Http404
 
